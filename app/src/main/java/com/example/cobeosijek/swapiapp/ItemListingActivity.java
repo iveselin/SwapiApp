@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
-import com.example.cobeosijek.swapiapp.category_list.OnItemClickListener;
+import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

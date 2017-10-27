@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp.category_list;
+package com.example.cobeosijek.swapiapp.base;
 
 /**
  * Created by cobeosijek on 27/10/2017.

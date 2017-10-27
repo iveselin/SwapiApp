@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.category_list.CategoryAdapter;
-import com.example.cobeosijek.swapiapp.category_list.OnItemClickListener;
+import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.models.Categories;
 
 import butterknife.BindView;

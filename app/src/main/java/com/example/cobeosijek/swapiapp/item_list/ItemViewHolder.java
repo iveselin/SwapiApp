@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp.category_list;
+package com.example.cobeosijek.swapiapp.item_list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,17 +15,22 @@ import butterknife.OnClick;
  * Created by cobeosijek on 27/10/2017.
  */
 
-public class CategoryViewHolder extends RecyclerView.ViewHolder {
+public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     private OnItemClickListener listener;
     private String itemId;
 
-    @BindView(R.id.category_name)
-    TextView categoryName;
+    @BindView(R.id.item_name)
+    TextView itemName;
 
-    public CategoryViewHolder(View itemView, OnItemClickListener listener) {
+    @BindView(R.id.item_first_attribute)
+    TextView firstAttribute;
+
+    @BindView(R.id.item_second_attribute)
+    TextView secondAttribute;
+
+    public ItemViewHolder(View itemView, OnItemClickListener listener) {
         super(itemView);
-
 
         ButterKnife.bind(this, itemView);
         this.listener = listener;
@@ -40,9 +45,5 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
-    }
-
-    public void setGray() {
-        itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorLightGrey));
     }
 }
