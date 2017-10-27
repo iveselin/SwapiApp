@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CategoryActivity" />
-        <activity android:name=".ItemListingActivity"></activity>
+        <activity android:name=".ItemListingActivity" />
+        <activity android:name=".ItemDetailsActivity"></activity>
     </application>
 
 </manifest>

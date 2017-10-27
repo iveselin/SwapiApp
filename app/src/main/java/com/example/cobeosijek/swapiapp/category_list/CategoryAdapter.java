@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
-    private List<Category> categoryList=new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
     private OnItemClickListener listener;
 
     public void setCategoryList(List<Category> categoryList) {
@@ -41,6 +41,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         if (categoryList.isEmpty() || categoryList.get(position) == null) {
             return;
+        }
+
+        if (position % 2 != 0) {
+            holder.setGray();
         }
 
         Category category = categoryList.get(position);

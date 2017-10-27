@@ -25,6 +25,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
     public CategoryViewHolder(View itemView, OnItemClickListener listener) {
         super(itemView);
 
+
         ButterKnife.bind(this, itemView);
         this.listener = listener;
     }
@@ -38,5 +39,9 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public void setGray() {
+        itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorLightGrey));
     }
 }

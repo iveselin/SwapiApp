@@ -30,5 +30,6 @@ public class OnBoardingActivity extends BaseActivity {
     @OnClick(R.id.forward_icon)
     void onForwardClick() {
         startActivity(CategoryActivity.getLaunchIntent(this));
+        finish();
     }
 }
