@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SwapiApp</string>
+    <string name="welcome_text">Welcome to the Star Wars trivia app!</string>
+    <string name="category_title_text">Category</string>
+</resources>
