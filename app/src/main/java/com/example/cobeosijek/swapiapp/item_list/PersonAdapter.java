@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
-import com.example.cobeosijek.swapiapp.models.Category;
+import com.example.cobeosijek.swapiapp.models.Person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +16,19 @@ import java.util.List;
  * Created by cobeosijek on 27/10/2017.
  */
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-
-    private List<Category> itemList = new ArrayList<>();
+    private List<Person> personList = new ArrayList<>();
     private OnItemClickListener listener;
 
-    public void setItemList(/*List<Item> itemList*/) {
-        this.itemList.clear();
-        this.itemList.addAll(itemList);
+    public void setPersonList(List<Person> personList) {
+        this.personList.clear();
+        this.personList.addAll(personList);
+        notifyDataSetChanged();
+    }
+
+    public void addPersonList(List<Person> itemList) {
+        this.personList.addAll(itemList);
         notifyDataSetChanged();
     }
 
@@ -37,19 +41,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        if (itemList.isEmpty() || itemList.get(position) == null) {
+        if (personList.isEmpty() || personList.get(position) == null) {
             return;
         }
 
-//        Item item = itemList.get(position);
+        Person person = personList.get(position);
 
-//        holder.itemName.setText();
-//        holder.firstAttribute.setText();
-//        holder.secondAttribute.setText();
+        holder.itemName.setText(person.getName());
+        holder.firstAttribute.setText(person.getBirthYear());
+        holder.setItemId(person.getName());
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return personList.size();
     }
 }

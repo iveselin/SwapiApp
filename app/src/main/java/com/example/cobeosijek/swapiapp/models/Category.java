@@ -8,10 +8,12 @@ public class Category {
 
     private String categoryName;
     private String categoryURL;
+    private CategoryTypeEnum categoryType;
 
-    public Category(String categoryName, String categoryURL) {
+    public Category(String categoryName, String categoryURL, CategoryTypeEnum categoryType) {
         this.categoryName = categoryName;
         this.categoryURL = categoryURL;
+        this.categoryType = categoryType;
     }
 
     public String getCategoryName() {
@@ -28,5 +30,13 @@ public class Category {
 
     public void setCategoryURL(String categoryURL) {
         this.categoryURL = categoryURL;
+    }
+
+    public CategoryTypeEnum getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(CategoryTypeEnum categoryType) {
+        this.categoryType = categoryType;
     }
 }

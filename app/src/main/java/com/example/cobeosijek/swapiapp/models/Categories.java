@@ -8,23 +8,23 @@ import java.util.List;
  */
 
 public class Categories {
-    List<Category> availibleCategories=new ArrayList<>();
+    List<Category> availableCategories = new ArrayList<>();
 
     public Categories() {
-        availibleCategories.add(new Category("Films", "films/"));
-        availibleCategories.add(new Category("People", "people/"));
-        availibleCategories.add(new Category("Planets", "planets/"));
-        availibleCategories.add(new Category("Species", "species/"));
-        availibleCategories.add(new Category("Starships", "starships/"));
-        availibleCategories.add(new Category("Vehicles", "vehicles/"));
+        availableCategories.add(new Category("Films", "films/", CategoryTypeEnum.FILMS));
+        availableCategories.add(new Category("People", "people/", CategoryTypeEnum.PEOPLE));
+        availableCategories.add(new Category("Planets", "planets/", CategoryTypeEnum.PLANETS));
+        availableCategories.add(new Category("Species", "species/", CategoryTypeEnum.SPECIES));
+        availableCategories.add(new Category("Starships", "starships/", CategoryTypeEnum.STARSHIPS));
+        availableCategories.add(new Category("Vehicles", "vehicles/", CategoryTypeEnum.VEHICLES));
 
     }
 
-    public void setAvailibleCategories(List<Category> categories) {
-        availibleCategories = categories;
+    public void setAvailableCategories(List<Category> categories) {
+        availableCategories = categories;
     }
 
-    public List<Category> getAvailibleCategories() {
-        return availibleCategories;
+    public List<Category> getAvailableCategories() {
+        return availableCategories;
     }
 }

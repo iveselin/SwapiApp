@@ -52,6 +52,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
         holder.setItemId(category.getCategoryURL());
         holder.categoryName.setText(category.getCategoryName());
+        holder.setItemId(category.getCategoryType().name());
     }
 
     @Override

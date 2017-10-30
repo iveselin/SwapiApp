@@ -20,9 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CategoryActivity" />
-        <activity android:name=".ItemListingActivity" />
-        <activity android:name=".ItemDetailsActivity"></activity>
+        <activity
+            android:name=".CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PeopleListingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MovieListingActivity"></activity>
     </application>
 
 </manifest>

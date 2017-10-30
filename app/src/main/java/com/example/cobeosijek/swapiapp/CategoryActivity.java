@@ -7,9 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
-import com.example.cobeosijek.swapiapp.category_list.CategoryAdapter;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
+import com.example.cobeosijek.swapiapp.category_list.CategoryAdapter;
 import com.example.cobeosijek.swapiapp.models.Categories;
+import com.example.cobeosijek.swapiapp.models.CategoryTypeEnum;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ public class CategoryActivity extends BaseActivity implements OnItemClickListene
         ButterKnife.bind(this);
 
         CategoryAdapter categoryAdapter = new CategoryAdapter();
-        categoryAdapter.setCategoryList(new Categories().getAvailibleCategories());
+        categoryAdapter.setCategoryList(new Categories().getAvailableCategories());
         categoryAdapter.setOnItemClickListener(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -46,8 +47,16 @@ public class CategoryActivity extends BaseActivity implements OnItemClickListene
         categoryList.setAdapter(categoryAdapter);
     }
 
+
     @Override
     public void onItemClick(String itemId) {
-        startActivity(ItemListingActivity.getLaunchIntent(this, itemId));
+
+        if (itemId.equals(CategoryTypeEnum.PEOPLE.name())) {
+            startActivity(PeopleListingActivity.getLaunchIntent(this));
+        } else if (itemId.equals(CategoryTypeEnum.FILMS.name())) {
+            startActivity(MovieListingActivity.getLaunchIntent(this));
+        }else if (itemId.equals(CategoryTypeEnum.PLANETS.name())){
+//            startActivity();
+        }
     }
 }
