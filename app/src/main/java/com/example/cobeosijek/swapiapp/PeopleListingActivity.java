@@ -26,8 +26,6 @@ import retrofit2.Response;
 
 public class PeopleListingActivity extends BaseActivity implements OnItemClickListener {
 
-    private static final String KEY_CATEGORY_ID = "category_ID";
-
     @BindView(R.id.item_list)
     RecyclerView itemList;
 
@@ -36,9 +34,6 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
 
     @BindView(R.id.action_bar_heading)
     TextView actionBarHeading;
-
-    private String categoryId;
-
 
     public static Intent getLaunchIntent(Context fromContext) {
         return new Intent(fromContext, PeopleListingActivity.class);
@@ -80,6 +75,7 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
 
         PersonAdapter adapter = new PersonAdapter();
         adapter.addPersonList(results.body().getResults());
+        adapter.setOnItemListener(this);
 
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -101,6 +97,7 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
     @Override
     public void onItemClick(String itemId) {
         // TODO: 27/10/2017 send item by id or the whole item object to the details activity
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId));
     }
 
 

@@ -50,6 +50,11 @@ public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         holder.itemName.setText(person.getName());
         holder.firstAttribute.setText(person.getBirthYear());
         holder.setItemId(person.getName());
+
+    }
+
+    public void setOnItemListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override

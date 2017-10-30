@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp.models;
+package com.example.cobeosijek.swapiapp.category_list;
 
 import java.util.ArrayList;
 import java.util.List;

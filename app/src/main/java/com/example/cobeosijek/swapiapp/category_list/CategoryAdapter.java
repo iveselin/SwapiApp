@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
-import com.example.cobeosijek.swapiapp.models.Category;
 
 import java.util.ArrayList;
 import java.util.List;
