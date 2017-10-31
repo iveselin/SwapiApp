@@ -20,6 +20,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// TODO: 31/10/2017 Implement fragments for every type of item and display it accordingly
+
 public class ItemDetailsActivity extends BaseActivity {
 
     private static final String KEY_ID_SEND = "item_Id";

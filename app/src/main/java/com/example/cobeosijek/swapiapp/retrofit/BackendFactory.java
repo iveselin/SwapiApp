@@ -16,6 +16,7 @@ public class BackendFactory {
     private static Retrofit retrofit;
     private static PeopleEndpoint peopleEndpoint;
     private static MovieEndpoint movieEndpoint;
+    private static PlanetEndpoint planetEndpoint;
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
@@ -45,6 +46,13 @@ public class BackendFactory {
             movieEndpoint = getRetrofitInstance().create(MovieEndpoint.class);
         }
         return movieEndpoint;
+    }
+
+    public static PlanetEndpoint getPlanetEndpoint() {
+        if (planetEndpoint == null) {
+            planetEndpoint = getRetrofitInstance().create(PlanetEndpoint.class);
+        }
+        return planetEndpoint;
     }
 
 }

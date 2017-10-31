@@ -29,7 +29,8 @@
         <activity
             android:name=".ItemDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MovieListingActivity"></activity>
+        <activity android:name=".MovieListingActivity" />
+        <activity android:name=".PlanetListingActivity"></activity>
     </application>
 
 </manifest>

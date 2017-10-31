@@ -6,4 +6,5 @@
     <string name="person_layout_title">Person</string>
     <string name="people_list_title">People</string>
     <string name="movies_list_title">Movies</string>
+    <string name="planets_list_title">Planets</string>
 </resources>
