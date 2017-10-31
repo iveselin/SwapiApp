@@ -39,6 +39,10 @@ public class MovieAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         return new ItemViewHolder(itemView, listener);
     }
 
+    public void setOnItemListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         if (movieList.isEmpty() || movieList.get(position) == null) {
@@ -49,7 +53,9 @@ public class MovieAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         holder.itemName.setText(movie.getTitle());
         holder.firstAttribute.setText(String.valueOf(movie.getEpisodeId()));
+        holder.secondAttribute.setText(movie.getProducer());
 
+        holder.setItemId(movie.getTitle());
     }
 
     @Override

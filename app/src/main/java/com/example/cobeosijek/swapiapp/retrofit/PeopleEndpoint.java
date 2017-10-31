@@ -4,7 +4,6 @@ import com.example.cobeosijek.swapiapp.response.SwapiPeopleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -18,4 +17,7 @@ public interface PeopleEndpoint {
 
     @GET("people/")
     Call<SwapiPeopleResponse> getPerson(@Query("search") String name);
+
+    @GET("people/")
+    Call<SwapiPeopleResponse> getNextPage(@Query("page") String nextPage);
 }

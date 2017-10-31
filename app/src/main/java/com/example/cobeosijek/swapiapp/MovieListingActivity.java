@@ -60,8 +60,8 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
     private void getMovies() {
         // TODO: 30/10/2017  change to movie endpoint
-        MovieEndpoint service = BackendFactory.getRetrofitInstance().create(MovieEndpoint.class);
-        retrofit2.Call<SwapiMoviesResponse> call = service.getMovies();
+        MovieEndpoint service = BackendFactory.getMovieEndpoint();
+        Call<SwapiMoviesResponse> call = service.getMovies();
         call.enqueue(new Callback<SwapiMoviesResponse>() {
             @Override
             public void onResponse(Call<SwapiMoviesResponse> call, Response<SwapiMoviesResponse> response) {
@@ -79,6 +79,7 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
         MovieAdapter adapter = new MovieAdapter();
         adapter.setMovieList(results.body().getResults());
+        adapter.setOnItemListener(this);
 
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -99,6 +100,7 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
     @Override
     public void onItemClick(String itemId) {
+        Toast.makeText(getApplicationContext(), "You clicked on " + itemId, Toast.LENGTH_SHORT).show();
         // TODO: 27/10/2017 send item by id or the whole item object to the details activity
     }
 

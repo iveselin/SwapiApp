@@ -3,4 +3,7 @@
     <string name="welcome_text">Welcome to the Star Wars trivia app!</string>
     <string name="category_title_text">Category</string>
     <string name="default_error_message">Something is wrong</string>
+    <string name="person_layout_title">Person</string>
+    <string name="people_list_title">People</string>
+    <string name="movies_list_title">Movies</string>
 </resources>

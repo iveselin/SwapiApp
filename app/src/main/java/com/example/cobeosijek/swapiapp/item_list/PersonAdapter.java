@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
+import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
 import com.example.cobeosijek.swapiapp.models.Person;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import java.util.List;
 public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     private List<Person> personList = new ArrayList<>();
-    private OnItemClickListener listener;
+    private OnItemClickListener clickListener;
+    private OnLastItemReachedListener lastItemReachedListener;
+
 
     public void setPersonList(List<Person> personList) {
         this.personList.clear();
@@ -36,7 +39,7 @@ public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.item_item, parent, false);
-        return new ItemViewHolder(itemView, listener);
+        return new ItemViewHolder(itemView, clickListener);
     }
 
     @Override
@@ -51,10 +54,23 @@ public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         holder.firstAttribute.setText(person.getBirthYear());
         holder.setItemId(person.getName());
 
+        handleItemPosition(position);
+
+
+    }
+
+    private void handleItemPosition(int position) {
+        if (getItemCount() >= 10 && position == getItemCount() - 1 && position > 0) {
+            lastItemReachedListener.onLastItem();
+        }
+    }
+
+    public void setLastItemReachedListener(OnLastItemReachedListener lastItemReachedListener) {
+        this.lastItemReachedListener = lastItemReachedListener;
     }
 
     public void setOnItemListener(OnItemClickListener listener) {
-        this.listener = listener;
+        this.clickListener = listener;
     }
 
     @Override

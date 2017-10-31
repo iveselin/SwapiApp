@@ -1,12 +1,13 @@
 package com.example.cobeosijek.swapiapp.models;
 
+import com.example.cobeosijek.swapiapp.base.BaseModel;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by cobeosijek on 30/10/2017.
  */
 
-public class Movie {
+public class Movie extends BaseModel {
 
     private String title;
 
@@ -19,7 +20,7 @@ public class Movie {
     private String openingCrawl;
 
     public String getTitle() {
-        return title;
+        return getValueOrEmpty(title);
     }
 
     public int getEpisodeId() {
@@ -27,10 +28,10 @@ public class Movie {
     }
 
     public String getProducer() {
-        return producer;
+        return getValueOrEmpty(producer);
     }
 
     public String getOpeningCrawl() {
-        return openingCrawl;
+        return getValueOrEmpty(openingCrawl);
     }
 }

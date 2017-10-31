@@ -3,7 +3,6 @@ package com.example.cobeosijek.swapiapp.item_list;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
@@ -39,7 +38,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    @OnClick
+    @OnClick(R.id.root_view)
     void onItemClicked() {
         if (listener != null) {
             listener.onItemClick(itemId);
