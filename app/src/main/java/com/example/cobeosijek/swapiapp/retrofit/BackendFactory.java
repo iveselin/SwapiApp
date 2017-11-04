@@ -1,5 +1,7 @@
 package com.example.cobeosijek.swapiapp.retrofit;
 
+import com.example.cobeosijek.swapiapp.models.Vehicle;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -17,6 +19,9 @@ public class BackendFactory {
     private static PeopleEndpoint peopleEndpoint;
     private static MovieEndpoint movieEndpoint;
     private static PlanetEndpoint planetEndpoint;
+    private static SpeciesEndpoint speciesEndpoint;
+    private static StarshipsEndpoint starshipsEndpoint;
+    private static VehiclesEndpoint vehiclesEndpoint;
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
@@ -53,6 +58,27 @@ public class BackendFactory {
             planetEndpoint = getRetrofitInstance().create(PlanetEndpoint.class);
         }
         return planetEndpoint;
+    }
+
+    public static SpeciesEndpoint getSpeciesEndpoint() {
+        if (speciesEndpoint == null) {
+            speciesEndpoint = getRetrofitInstance().create(SpeciesEndpoint.class);
+        }
+        return speciesEndpoint;
+    }
+
+    public static StarshipsEndpoint getStarshipsEndpoint() {
+        if (starshipsEndpoint == null) {
+            starshipsEndpoint = getRetrofitInstance().create(StarshipsEndpoint.class);
+        }
+        return starshipsEndpoint;
+    }
+
+    public static VehiclesEndpoint getVehiclesEndpoint() {
+        if (vehiclesEndpoint == null) {
+            vehiclesEndpoint = getRetrofitInstance().create(VehiclesEndpoint.class);
+        }
+        return vehiclesEndpoint;
     }
 
 }

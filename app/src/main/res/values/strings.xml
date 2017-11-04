@@ -7,4 +7,7 @@
     <string name="people_list_title">People</string>
     <string name="movies_list_title">Movies</string>
     <string name="planets_list_title">Planets</string>
+    <string name="species_list_title">Species</string>
+    <string name="starships_list_title">Starships</string>
+    <string name="vehicles_list_title">Vehicles</string>
 </resources>

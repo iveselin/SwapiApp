@@ -59,7 +59,6 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
     }
 
     private void getMovies() {
-        // TODO: 30/10/2017  change to movie endpoint
         MovieEndpoint service = BackendFactory.getMovieEndpoint();
         Call<SwapiMoviesResponse> call = service.getMovies();
         call.enqueue(new Callback<SwapiMoviesResponse>() {

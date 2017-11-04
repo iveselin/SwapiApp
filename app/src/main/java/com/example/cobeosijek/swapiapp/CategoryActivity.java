@@ -57,6 +57,12 @@ public class CategoryActivity extends BaseActivity implements OnItemClickListene
             startActivity(MovieListingActivity.getLaunchIntent(this));
         } else if (itemId.equals(CategoryTypeEnum.PLANETS.name())) {
             startActivity(PlanetListingActivity.getLaunchIntent(this));
+        } else if (itemId.equals(CategoryTypeEnum.SPECIES.name())) {
+            startActivity(SpeciesListingActivity.getLaunchIntent(this));
+        } else if (itemId.equals(CategoryTypeEnum.STARSHIPS.name())) {
+            startActivity(StarshipsListingActivity.getLaunchIntent(this));
+        } else if (itemId.equals(CategoryTypeEnum.VEHICLES.name())) {
+            startActivity(VehiclesListingActivity.getLaunchIntent(this));
         }
     }
 }

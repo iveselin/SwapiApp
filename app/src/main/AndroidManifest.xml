@@ -30,7 +30,10 @@
             android:name=".ItemDetailsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".MovieListingActivity" />
-        <activity android:name=".PlanetListingActivity"></activity>
+        <activity android:name=".PlanetListingActivity" />
+        <activity android:name=".SpeciesListingActivity" />
+        <activity android:name=".StarshipsListingActivity" />
+        <activity android:name=".VehiclesListingActivity"></activity>
     </application>
 
 </manifest>
