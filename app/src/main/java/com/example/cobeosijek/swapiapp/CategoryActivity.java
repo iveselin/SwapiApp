@@ -11,6 +11,12 @@ import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryAdapter;
 import com.example.cobeosijek.swapiapp.category_list.Categories;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
+import com.example.cobeosijek.swapiapp.lists.MovieListingActivity;
+import com.example.cobeosijek.swapiapp.lists.PeopleListingActivity;
+import com.example.cobeosijek.swapiapp.lists.PlanetListingActivity;
+import com.example.cobeosijek.swapiapp.lists.SpeciesListingActivity;
+import com.example.cobeosijek.swapiapp.lists.StarshipsListingActivity;
+import com.example.cobeosijek.swapiapp.lists.VehiclesListingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

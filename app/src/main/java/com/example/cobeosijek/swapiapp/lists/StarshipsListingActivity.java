@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp;
+package com.example.cobeosijek.swapiapp.lists;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cobeosijek.swapiapp.ItemDetailsActivity;
+import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
-import com.example.cobeosijek.swapiapp.item_list.PlanetAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiPlanetResponse;
+import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
+import com.example.cobeosijek.swapiapp.item_list.StarshipsAdapter;
+import com.example.cobeosijek.swapiapp.response.SwapiStarshipsResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
-import com.example.cobeosijek.swapiapp.retrofit.PlanetEndpoint;
+import com.example.cobeosijek.swapiapp.retrofit.StarshipsEndpoint;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlanetListingActivity extends BaseActivity implements OnLastItemReachedListener, OnItemClickListener {
+public class StarshipsListingActivity extends BaseActivity implements OnLastItemReachedListener, OnItemClickListener {
 
     @BindView(R.id.item_list)
     RecyclerView itemList;
@@ -39,16 +42,16 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
 
     private String nextLink;
 
-    private PlanetAdapter adapter;
+    private StarshipsAdapter adapter;
 
     public static Intent getLaunchIntent(Context fromContext) {
-        return new Intent(fromContext, PlanetListingActivity.class);
+        return new Intent(fromContext, StarshipsListingActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_planet_listing);
+        setContentView(R.layout.activity_starships_listing);
 
         setUI();
     }
@@ -57,29 +60,29 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
     public void setUI() {
         ButterKnife.bind(this);
 
-        getPlanets();
+        getStarships();
     }
 
-    private void getPlanets() {
-        PlanetEndpoint service = BackendFactory.getPlanetEndpoint();
-        Call<SwapiPlanetResponse> call = service.getPlanets();
-        call.enqueue(new Callback<SwapiPlanetResponse>() {
+    private void getStarships() {
+        StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
+        Call<SwapiStarshipsResponse> call = service.getStarships();
+        call.enqueue(new Callback<SwapiStarshipsResponse>() {
             @Override
-            public void onResponse(Call<SwapiPlanetResponse> call, Response<SwapiPlanetResponse> response) {
+            public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
                 nextLink = response.body().getNext();
-                showPlanets(response);
+                showSpecies(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiPlanetResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showPlanets(Response<SwapiPlanetResponse> response) {
-        adapter = new PlanetAdapter();
-        adapter.setPlanetList(response.body().getResults());
+    private void showSpecies(Response<SwapiStarshipsResponse> response) {
+        adapter = new StarshipsAdapter();
+        adapter.setStarshipList(response.body().getResults());
         adapter.setOnItemListener(this);
         adapter.setLastItemReachedListener(this);
 
@@ -93,7 +96,7 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
 
     @Override
     public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId));
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.STARSHIPS.name()));
     }
 
     @Override
@@ -103,17 +106,17 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
             Uri uri = Uri.parse(nextLink);
             String nextPageNumber = uri.getQueryParameter("page");
 
-            PlanetEndpoint service = BackendFactory.getPlanetEndpoint();
-            Call<SwapiPlanetResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiPlanetResponse>() {
+            StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
+            Call<SwapiStarshipsResponse> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiStarshipsResponse>() {
                 @Override
-                public void onResponse(Call<SwapiPlanetResponse> call, Response<SwapiPlanetResponse> response) {
+                public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
                     nextLink = response.body().getNext();
-                    addPlanets(response);
+                    addSpecies(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiPlanetResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -123,8 +126,8 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
         }
     }
 
-    private void addPlanets(Response<SwapiPlanetResponse> response) {
-        adapter.addPlanetList(response.body().getResults());
+    private void addSpecies(Response<SwapiStarshipsResponse> response) {
+        adapter.addStarshipsList(response.body().getResults());
     }
 
     @OnClick(R.id.action_bar_back_icon)

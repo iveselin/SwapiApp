@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp;
+package com.example.cobeosijek.swapiapp.lists;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,16 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cobeosijek.swapiapp.ItemDetailsActivity;
+import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
-import com.example.cobeosijek.swapiapp.item_list.SpeciesAdapter;
-import com.example.cobeosijek.swapiapp.item_list.StarshipsAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiSpeciesResponse;
-import com.example.cobeosijek.swapiapp.response.SwapiStarshipsResponse;
+import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
+import com.example.cobeosijek.swapiapp.item_list.PersonAdapter;
+import com.example.cobeosijek.swapiapp.response.SwapiPeopleResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
-import com.example.cobeosijek.swapiapp.retrofit.SpeciesEndpoint;
-import com.example.cobeosijek.swapiapp.retrofit.StarshipsEndpoint;
+import com.example.cobeosijek.swapiapp.retrofit.PeopleEndpoint;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StarshipsListingActivity extends BaseActivity implements OnLastItemReachedListener, OnItemClickListener {
+public class PeopleListingActivity extends BaseActivity implements OnItemClickListener, OnLastItemReachedListener {
 
     @BindView(R.id.item_list)
     RecyclerView itemList;
@@ -42,16 +42,16 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
 
     private String nextLink;
 
-    private StarshipsAdapter adapter;
+    private PersonAdapter adapter;
 
     public static Intent getLaunchIntent(Context fromContext) {
-        return new Intent(fromContext, StarshipsListingActivity.class);
+        return new Intent(fromContext, PeopleListingActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_starships_listing);
+        setContentView(R.layout.activity_people_listing);
 
         setUI();
     }
@@ -60,29 +60,30 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
     public void setUI() {
         ButterKnife.bind(this);
 
-        getStarships();
+        getPeople();
     }
 
-    private void getStarships() {
-        StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
-        Call<SwapiStarshipsResponse> call = service.getStarships();
-        call.enqueue(new Callback<SwapiStarshipsResponse>() {
+    private void getPeople() {
+
+        PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
+        Call<SwapiPeopleResponse> call = service.getPeople();
+        call.enqueue(new Callback<SwapiPeopleResponse>() {
             @Override
-            public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
+            public void onResponse(Call<SwapiPeopleResponse> call, Response<SwapiPeopleResponse> response) {
                 nextLink = response.body().getNext();
-                showSpecies(response);
+                showPeople(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showSpecies(Response<SwapiStarshipsResponse> response) {
-        adapter = new StarshipsAdapter();
-        adapter.setStarshipList(response.body().getResults());
+    private void showPeople(Response<SwapiPeopleResponse> results) {
+        adapter = new PersonAdapter();
+        adapter.setPersonList(results.body().getResults());
         adapter.setOnItemListener(this);
         adapter.setLastItemReachedListener(this);
 
@@ -94,10 +95,17 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
         itemList.setAdapter(adapter);
     }
 
+    @OnClick(R.id.action_bar_back_icon)
+    void goBack() {
+        onBackPressed();
+    }
+
+
     @Override
     public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId));
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.PEOPLE.name()));
     }
+
 
     @Override
     public void onLastItem() {
@@ -106,17 +114,17 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
             Uri uri = Uri.parse(nextLink);
             String nextPageNumber = uri.getQueryParameter("page");
 
-            StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
-            Call<SwapiStarshipsResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiStarshipsResponse>() {
+            PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
+            Call<SwapiPeopleResponse> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiPeopleResponse>() {
                 @Override
-                public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
+                public void onResponse(Call<SwapiPeopleResponse> call, Response<SwapiPeopleResponse> response) {
                     nextLink = response.body().getNext();
-                    addSpecies(response);
+                    addPeople(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -126,12 +134,7 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
         }
     }
 
-    private void addSpecies(Response<SwapiStarshipsResponse> response) {
-        adapter.addStarshipsList(response.body().getResults());
-    }
-
-    @OnClick(R.id.action_bar_back_icon)
-    void goBack() {
-        onBackPressed();
+    private void addPeople(Response<SwapiPeopleResponse> response) {
+        adapter.addPersonList(response.body().getResults());
     }
 }

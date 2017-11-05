@@ -24,16 +24,16 @@
             android:name=".CategoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PeopleListingActivity"
+            android:name=".lists.PeopleListingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ItemDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MovieListingActivity" />
-        <activity android:name=".PlanetListingActivity" />
-        <activity android:name=".SpeciesListingActivity" />
-        <activity android:name=".StarshipsListingActivity" />
-        <activity android:name=".VehiclesListingActivity"></activity>
+        <activity android:name=".lists.MovieListingActivity" />
+        <activity android:name=".lists.PlanetListingActivity" />
+        <activity android:name=".lists.SpeciesListingActivity" />
+        <activity android:name=".lists.StarshipsListingActivity" />
+        <activity android:name=".lists.VehiclesListingActivity"></activity>
     </application>
 
 </manifest>

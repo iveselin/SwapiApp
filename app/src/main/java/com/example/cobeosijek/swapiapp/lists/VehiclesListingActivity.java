@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp;
+package com.example.cobeosijek.swapiapp.lists;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cobeosijek.swapiapp.ItemDetailsActivity;
+import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
-import com.example.cobeosijek.swapiapp.item_list.SpeciesAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiSpeciesResponse;
+import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
+import com.example.cobeosijek.swapiapp.item_list.VehiclesAdapter;
+import com.example.cobeosijek.swapiapp.response.SwapiVehicleResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
-import com.example.cobeosijek.swapiapp.retrofit.SpeciesEndpoint;
+import com.example.cobeosijek.swapiapp.retrofit.VehiclesEndpoint;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SpeciesListingActivity extends BaseActivity implements OnLastItemReachedListener, OnItemClickListener {
+public class VehiclesListingActivity extends BaseActivity implements OnLastItemReachedListener, OnItemClickListener {
 
     @BindView(R.id.item_list)
     RecyclerView itemList;
@@ -39,16 +42,16 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
 
     private String nextLink;
 
-    private SpeciesAdapter adapter;
+    private VehiclesAdapter adapter;
 
     public static Intent getLaunchIntent(Context fromContext) {
-        return new Intent(fromContext, SpeciesListingActivity.class);
+        return new Intent(fromContext, VehiclesListingActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_species_listing);
+        setContentView(R.layout.activity_vehicles_listing);
 
         setUI();
     }
@@ -57,29 +60,29 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
     public void setUI() {
         ButterKnife.bind(this);
 
-        getSpecies();
+        getVehicles();
     }
 
-    private void getSpecies() {
-        SpeciesEndpoint service = BackendFactory.getSpeciesEndpoint();
-        Call<SwapiSpeciesResponse> call = service.getSpecies();
-        call.enqueue(new Callback<SwapiSpeciesResponse>() {
+    private void getVehicles() {
+        VehiclesEndpoint service = BackendFactory.getVehiclesEndpoint();
+        Call<SwapiVehicleResponse> call = service.getVehicles();
+        call.enqueue(new Callback<SwapiVehicleResponse>() {
             @Override
-            public void onResponse(Call<SwapiSpeciesResponse> call, Response<SwapiSpeciesResponse> response) {
+            public void onResponse(Call<SwapiVehicleResponse> call, Response<SwapiVehicleResponse> response) {
                 nextLink = response.body().getNext();
                 showSpecies(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiSpeciesResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiVehicleResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showSpecies(Response<SwapiSpeciesResponse> response) {
-        adapter = new SpeciesAdapter();
-        adapter.setSpeciesList(response.body().getResults());
+    private void showSpecies(Response<SwapiVehicleResponse> response) {
+        adapter = new VehiclesAdapter();
+        adapter.setVehicleList(response.body().getResults());
         adapter.setOnItemListener(this);
         adapter.setLastItemReachedListener(this);
 
@@ -93,7 +96,7 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
 
     @Override
     public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId));
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.VEHICLES.name()));
     }
 
     @Override
@@ -103,17 +106,17 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
             Uri uri = Uri.parse(nextLink);
             String nextPageNumber = uri.getQueryParameter("page");
 
-            SpeciesEndpoint service = BackendFactory.getSpeciesEndpoint();
-            Call<SwapiSpeciesResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiSpeciesResponse>() {
+            VehiclesEndpoint service = BackendFactory.getVehiclesEndpoint();
+            Call<SwapiVehicleResponse> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiVehicleResponse>() {
                 @Override
-                public void onResponse(Call<SwapiSpeciesResponse> call, Response<SwapiSpeciesResponse> response) {
+                public void onResponse(Call<SwapiVehicleResponse> call, Response<SwapiVehicleResponse> response) {
                     nextLink = response.body().getNext();
                     addSpecies(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiSpeciesResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiVehicleResponse> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -123,8 +126,8 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
         }
     }
 
-    private void addSpecies(Response<SwapiSpeciesResponse> response) {
-        adapter.addSpeciesList(response.body().getResults());
+    private void addSpecies(Response<SwapiVehicleResponse> response) {
+        adapter.addVehiclesList(response.body().getResults());
     }
 
     @OnClick(R.id.action_bar_back_icon)

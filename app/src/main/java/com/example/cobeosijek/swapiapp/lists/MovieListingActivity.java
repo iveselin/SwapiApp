@@ -1,4 +1,4 @@
-package com.example.cobeosijek.swapiapp;
+package com.example.cobeosijek.swapiapp.lists;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cobeosijek.swapiapp.ItemDetailsActivity;
+import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
+import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.MovieAdapter;
 import com.example.cobeosijek.swapiapp.response.SwapiMoviesResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
@@ -100,7 +103,7 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
     @Override
     public void onItemClick(String itemId) {
         Toast.makeText(getApplicationContext(), "You clicked on " + itemId, Toast.LENGTH_SHORT).show();
-        // TODO: 27/10/2017 send item by id or the whole item object to the details activity
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.FILMS.name()));
     }
 
 
