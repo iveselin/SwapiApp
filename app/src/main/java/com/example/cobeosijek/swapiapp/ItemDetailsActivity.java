@@ -3,7 +3,7 @@ package com.example.cobeosijek.swapiapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
@@ -13,19 +13,15 @@ import android.widget.Toast;
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.details.MovieDetailsFragment;
-import com.example.cobeosijek.swapiapp.models.Person;
-import com.example.cobeosijek.swapiapp.response.SwapiPeopleResponse;
-import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
-import com.example.cobeosijek.swapiapp.retrofit.PeopleEndpoint;
+import com.example.cobeosijek.swapiapp.details.PeopleDetailsFragment;
+import com.example.cobeosijek.swapiapp.details.PlanetDetailsFragment;
+import com.example.cobeosijek.swapiapp.details.SpeciesDetailsFragment;
+import com.example.cobeosijek.swapiapp.details.StarshipDetailsFragment;
+import com.example.cobeosijek.swapiapp.details.VehicleDetailsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-// TODO: 31/10/2017 Implement fragments for every type of item and display it accordingly
 
 
 public class ItemDetailsActivity extends BaseActivity {
@@ -35,8 +31,6 @@ public class ItemDetailsActivity extends BaseActivity {
 
     @BindView(R.id.action_bar_back_icon)
     ImageView backIcon;
-
-
 
     @BindView(R.id.action_bar_heading)
     TextView layoutTitle;
@@ -77,45 +71,42 @@ public class ItemDetailsActivity extends BaseActivity {
     public void setUI() {
         ButterKnife.bind(this);
 
-        layoutTitle.setText(R.string.person_layout_title);
+        layoutTitle.setText(itemType);
+
+        Fragment fragment = null;
+
         if (itemType.equals(CategoryTypeEnum.FILMS.name())) {
-            MovieDetailsFragment movieDetailsFragment = MovieDetailsFragment.newInstance(itemId);
+            fragment = MovieDetailsFragment.newInstance(itemId);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        } else if (itemType.equals(CategoryTypeEnum.PEOPLE.name())) {
+            fragment = PeopleDetailsFragment.newInstance(itemId);
 
-            fragmentTransaction.add(R.id.fragment_container, movieDetailsFragment);
+        } else if (itemType.equals(CategoryTypeEnum.PLANETS.name())) {
+            fragment = PlanetDetailsFragment.newInstance(itemId);
 
-            fragmentTransaction.commit();
+        } else if (itemType.equals(CategoryTypeEnum.SPECIES.name())) {
+            fragment = SpeciesDetailsFragment.newInstance(itemId);
 
+        } else if (itemType.equals(CategoryTypeEnum.STARSHIPS.name())) {
+            fragment = StarshipDetailsFragment.newInstance(itemId);
+
+        } else if (itemType.equals(CategoryTypeEnum.VEHICLES.name())) {
+            fragment = VehicleDetailsFragment.newInstance(itemId);
         } else {
-            PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
-            Call<SwapiPeopleResponse> call = service.getPerson(itemId);
-            call.enqueue(new Callback<SwapiPeopleResponse>() {
-
-                @Override
-                public void onResponse(Call<SwapiPeopleResponse> call, Response<SwapiPeopleResponse> response) {
-                    if (response.body().getCount() <= 1) {
-                        Person person = response.body().getResults().get(0);
-                        if (person != null) {
-//                            showPerson(person);
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            });
+            finish();
         }
+
+        setFragment(fragment);
     }
 
-//    private void showPerson(Person personToShow) {
-//        itemTitle.setText(personToShow.getName());
-//    }
+    private void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }
+
 
     @OnClick(R.id.action_bar_back_icon)
     void goBack() {

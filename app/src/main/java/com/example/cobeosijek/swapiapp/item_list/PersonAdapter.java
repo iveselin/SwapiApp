@@ -1,5 +1,6 @@
 package com.example.cobeosijek.swapiapp.item_list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,13 +51,13 @@ public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         Person person = personList.get(position);
 
+        Context holderContext = holder.itemView.getContext();
         holder.itemName.setText(person.getName());
-        holder.firstAttribute.setText(person.getBirthYear());
+        holder.firstAttribute.setText(String.format(holderContext.getString(R.string.birth_year_format), person.getBirthYear()));
+        holder.secondAttribute.setVisibility(View.GONE);
         holder.setItemId(person.getName());
 
         handleItemPosition(position);
-
-
     }
 
     private void handleItemPosition(int position) {

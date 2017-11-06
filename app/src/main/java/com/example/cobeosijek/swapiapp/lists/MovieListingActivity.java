@@ -38,9 +38,6 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
     @BindView(R.id.action_bar_heading)
     TextView actionBarHeading;
 
-    private String categoryId;
-
-
     public static Intent getLaunchIntent(Context fromContext) {
         return new Intent(fromContext, MovieListingActivity.class);
     }
@@ -89,9 +86,6 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
         itemList.addItemDecoration(decoration);
         itemList.setLayoutManager(layoutManager);
         itemList.setAdapter(adapter);
-
-
-        // TODO: 30/10/2017 lazy loading with onScroll listener
     }
 
     @OnClick(R.id.action_bar_back_icon)
@@ -102,9 +96,6 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
     @Override
     public void onItemClick(String itemId) {
-        Toast.makeText(getApplicationContext(), "You clicked on " + itemId, Toast.LENGTH_SHORT).show();
         startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.FILMS.name()));
     }
-
-
 }

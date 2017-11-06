@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movie_details_layout"
+    android:id="@+id/person_details_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/movie_title"
+        android:id="@+id/person_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -18,7 +18,7 @@
         tools:text="sample text" />
 
     <TextView
-        android:id="@+id/movie_episode"
+        android:id="@+id/person_birth_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -33,13 +33,11 @@
         android:layout_margin="@dimen/default_margin_tiny" />
 
     <TextView
-        android:id="@+id/movie_crawl"
+        android:id="@+id/person_movie_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/default_margin_tiny"
-        android:gravity="center"
-        android:maxLines="5"
-        android:scrollbars="vertical" />
+        android:gravity="center" />
 
 </LinearLayout>

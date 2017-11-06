@@ -1,5 +1,6 @@
 package com.example.cobeosijek.swapiapp.item_list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
-import com.example.cobeosijek.swapiapp.models.Starship;
 import com.example.cobeosijek.swapiapp.models.Vehicle;
 
 import java.util.ArrayList;
@@ -50,8 +50,10 @@ public class VehiclesAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         Vehicle vehicle = vehicleList.get(position);
 
+        Context holderContext = holder.itemView.getContext();
         holder.itemName.setText(vehicle.getName());
-        holder.firstAttribute.setText(vehicle.getModel());
+        holder.firstAttribute.setText(String.format(holderContext.getString(R.string.model_format), vehicle.getModel()));
+        holder.secondAttribute.setVisibility(View.GONE);
         holder.setItemId(vehicle.getName());
 
         handleItemPosition(position);

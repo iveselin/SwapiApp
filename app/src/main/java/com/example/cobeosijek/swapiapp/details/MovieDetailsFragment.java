@@ -3,6 +3,7 @@ package com.example.cobeosijek.swapiapp.details;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,8 @@ public class MovieDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getExtras();
     }
 
     @Nullable
@@ -65,21 +68,22 @@ public class MovieDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
 
-        getExtras();
-        setUI();
+        ButterKnife.bind(this, view);
+        setUi();
     }
 
     private void getExtras() {
         movieId = getArguments().getString(KEY_MOVIE_ID);
         if (movieId == null) {
             Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            // TODO: 5.11.2017. go back 
+            getActivity().finish();
         }
     }
 
-    private void setUI() {
+    private void setUi() {
+
+        movieCrawlText.setMovementMethod(new ScrollingMovementMethod());
 
         MovieEndpoint service = BackendFactory.getMovieEndpoint();
         Call<SwapiMoviesResponse> call = service.getMovieById(movieId);
@@ -96,15 +100,16 @@ public class MovieDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiMoviesResponse> call, Throwable t) {
-                // TODO: 5.11.2017. error and out
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
             }
         });
     }
 
     private void showMovie(Movie movie) {
         movieTitle.setText(movie.getTitle());
-        movieEpisode.setText(String.valueOf(movie.getEpisodeId()));
-        movieProducer.setText(movie.getProducer());
+        movieEpisode.setText(String.format(getString(R.string.details_episode_number_format), movie.getEpisodeId()));
+        movieProducer.setText(String.format(getString(R.string.details_producers_format), movie.getProducer()));
         movieCrawlText.setText(movie.getOpeningCrawl());
     }
 }

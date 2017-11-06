@@ -59,14 +59,19 @@ public class CategoryActivity extends BaseActivity implements OnItemClickListene
 
         if (itemId.equals(CategoryTypeEnum.PEOPLE.name())) {
             startActivity(PeopleListingActivity.getLaunchIntent(this));
+
         } else if (itemId.equals(CategoryTypeEnum.FILMS.name())) {
             startActivity(MovieListingActivity.getLaunchIntent(this));
+
         } else if (itemId.equals(CategoryTypeEnum.PLANETS.name())) {
             startActivity(PlanetListingActivity.getLaunchIntent(this));
+
         } else if (itemId.equals(CategoryTypeEnum.SPECIES.name())) {
             startActivity(SpeciesListingActivity.getLaunchIntent(this));
+
         } else if (itemId.equals(CategoryTypeEnum.STARSHIPS.name())) {
             startActivity(StarshipsListingActivity.getLaunchIntent(this));
+
         } else if (itemId.equals(CategoryTypeEnum.VEHICLES.name())) {
             startActivity(VehiclesListingActivity.getLaunchIntent(this));
         }

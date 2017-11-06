@@ -1,5 +1,6 @@
 package com.example.cobeosijek.swapiapp.item_list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,9 +52,10 @@ public class MovieAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         Movie movie = movieList.get(position);
 
+        Context holderContext = holder.itemView.getContext();
         holder.itemName.setText(movie.getTitle());
-        holder.firstAttribute.setText(String.valueOf(movie.getEpisodeId()));
-        holder.secondAttribute.setText(movie.getProducer());
+        holder.firstAttribute.setText(String.format(holderContext.getString(R.string.episode_number_format), movie.getEpisodeId()));
+        holder.secondAttribute.setText(String.format(holderContext.getString(R.string.producers_format), movie.getProducer()));
 
         holder.setItemId(movie.getTitle());
     }

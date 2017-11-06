@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movie_details_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/movie_title"
+        android:id="@+id/vehicle_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/default_margin_small"
+        android:layout_margin="@dimen/default_margin_tiny"
         android:textAlignment="center"
         android:textSize="@dimen/title_text_size"
         android:textStyle="bold"
         tools:text="sample text" />
 
     <TextView
-        android:id="@+id/movie_episode"
+        android:id="@+id/vehicle_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -26,20 +25,24 @@
         tools:text="sample id" />
 
     <TextView
-        android:id="@+id/movie_producer"
+        android:id="@+id/vehicle_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/default_margin_tiny" />
 
     <TextView
-        android:id="@+id/movie_crawl"
+        android:id="@+id/vehicle_crew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/default_margin_tiny"
-        android:gravity="center"
-        android:maxLines="5"
-        android:scrollbars="vertical" />
+        android:layout_margin="@dimen/default_margin_tiny" />
+
+    <TextView
+        android:id="@+id/vehicle_passengers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin_tiny" />
 
 </LinearLayout>

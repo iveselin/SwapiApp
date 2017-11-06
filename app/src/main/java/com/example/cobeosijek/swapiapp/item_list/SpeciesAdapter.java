@@ -1,5 +1,6 @@
 package com.example.cobeosijek.swapiapp.item_list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
-import com.example.cobeosijek.swapiapp.models.Planet;
 import com.example.cobeosijek.swapiapp.models.Species;
 
 import java.util.ArrayList;
@@ -50,13 +50,13 @@ public class SpeciesAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         Species species = speciesList.get(position);
 
+        Context holderContext = holder.itemView.getContext();
         holder.itemName.setText(species.getName());
-        holder.firstAttribute.setText(species.getLanguage());
+        holder.firstAttribute.setText(String.format(holderContext.getString(R.string.language_format), species.getLanguage()));
+        holder.secondAttribute.setVisibility(View.GONE);
         holder.setItemId(species.getName());
 
         handleItemPosition(position);
-
-
     }
 
     private void handleItemPosition(int position) {

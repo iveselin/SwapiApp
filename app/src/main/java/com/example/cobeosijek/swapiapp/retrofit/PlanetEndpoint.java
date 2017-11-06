@@ -16,7 +16,7 @@ public interface PlanetEndpoint {
     Call<SwapiPlanetResponse> getPlanets();
 
     @GET("planets/")
-    Call<SwapiPlanetResponse> getPerson(@Query("search") String name);
+    Call<SwapiPlanetResponse> getPlanet(@Query("search") String name);
 
     @GET("planets/")
     Call<SwapiPlanetResponse> getNextPage(@Query("page") String nextPage);

@@ -1,5 +1,6 @@
 package com.example.cobeosijek.swapiapp.item_list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,10 @@ public class PlanetAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         Planet planet = planetList.get(position);
 
+        Context holderContext = holder.itemView.getContext();
         holder.itemName.setText(planet.getName());
-        holder.firstAttribute.setText(planet.getPopulation());
+        holder.firstAttribute.setText(String.format(holderContext.getString(R.string.population_format), planet.getPopulation()));
+        holder.secondAttribute.setVisibility(View.GONE);
         holder.setItemId(planet.getName());
 
         handleItemPosition(position);

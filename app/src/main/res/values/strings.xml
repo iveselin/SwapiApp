@@ -10,4 +10,18 @@
     <string name="species_list_title">Species</string>
     <string name="starships_list_title">Starships</string>
     <string name="vehicles_list_title">Vehicles</string>
+    <string name="episode_number_format">Episode nr: %d</string>
+    <string name="producers_format">Producer(s): %s</string>
+    <string name="birth_year_format">Birth year: %s</string>
+    <string name="population_format">Population: %s</string>
+    <string name="language_format">Language: %s</string>
+    <string name="model_format">Model: %s</string>
+    <string name="details_episode_number_format">Episode number %d.</string>
+    <string name="details_producers_format">This episode was produced by: %s</string>
+    <string name="class_format">Class: %s</string>
+    <string name="crew_format">Crew number: %s</string>
+    <string name="orbital_period_format">Orbital period: %s days</string>
+    <string name="rotation_period_format">Rotation period: %s hours</string>
+    <string name="terrain_format">Terrain type: %s</string>
+    <string name="classification_format">Classification: %s</string>
 </resources>

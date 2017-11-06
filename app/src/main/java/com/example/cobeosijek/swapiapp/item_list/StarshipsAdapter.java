@@ -1,6 +1,6 @@
 package com.example.cobeosijek.swapiapp.item_list;
 
-import android.content.ClipData;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
-import com.example.cobeosijek.swapiapp.models.Species;
 import com.example.cobeosijek.swapiapp.models.Starship;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
  * Created by Ivan on 4.11.2017..
  */
 
-public class StarshipsAdapter extends RecyclerView.Adapter<ItemViewHolder>{
+public class StarshipsAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private List<Starship> starshipList = new ArrayList<>();
     private OnItemClickListener clickListener;
     private OnLastItemReachedListener lastItemReachedListener;
@@ -51,8 +50,10 @@ public class StarshipsAdapter extends RecyclerView.Adapter<ItemViewHolder>{
 
         Starship starship = starshipList.get(position);
 
+        Context holderContext = holder.itemView.getContext();
         holder.itemName.setText(starship.getName());
-        holder.firstAttribute.setText(starship.getModel());
+        holder.firstAttribute.setText(String.format(holderContext.getString(R.string.model_format), starship.getModel()));
+        holder.secondAttribute.setVisibility(View.GONE);
         holder.setItemId(starship.getName());
 
         handleItemPosition(position);
