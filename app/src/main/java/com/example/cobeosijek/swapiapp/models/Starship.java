@@ -16,6 +16,10 @@ public class Starship extends BaseModel {
     @SerializedName("starship_class")
     private String starshipClass;
 
+    private String crew;
+
+    private String passengers;
+
     public String getName() {
         return getValueOrEmpty(name);
     }
@@ -26,5 +30,13 @@ public class Starship extends BaseModel {
 
     public String getStarshipClass() {
         return getValueOrEmpty(starshipClass);
+    }
+
+    public String getCrew() {
+        return crew;
+    }
+
+    public String getPassengers() {
+        return passengers;
     }
 }

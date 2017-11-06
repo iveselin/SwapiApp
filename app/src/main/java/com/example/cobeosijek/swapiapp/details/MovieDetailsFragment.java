@@ -42,6 +42,9 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.movie_crawl)
     TextView movieCrawlText;
 
+    @BindView(R.id.movie_director)
+    TextView movieDirector;
+
     private String movieId;
 
     public static MovieDetailsFragment newInstance(String movieId) {
@@ -100,7 +103,7 @@ public class MovieDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiMoviesResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
@@ -111,5 +114,6 @@ public class MovieDetailsFragment extends Fragment {
         movieEpisode.setText(String.format(getString(R.string.details_episode_number_format), movie.getEpisodeId()));
         movieProducer.setText(String.format(getString(R.string.details_producers_format), movie.getProducer()));
         movieCrawlText.setText(movie.getOpeningCrawl());
+        movieDirector.setText(String.format(getString(R.string.director_format), movie.getDirector()));
     }
 }

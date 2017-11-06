@@ -19,6 +19,8 @@ public class Movie extends BaseModel {
     @SerializedName("opening_crawl")
     private String openingCrawl;
 
+    private String director;
+
     public String getTitle() {
         return getValueOrEmpty(title);
     }
@@ -33,5 +35,9 @@ public class Movie extends BaseModel {
 
     public String getOpeningCrawl() {
         return getValueOrEmpty(openingCrawl);
+    }
+
+    public String getDirector() {
+        return getValueOrEmpty(director);
     }
 }

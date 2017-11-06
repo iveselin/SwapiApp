@@ -100,7 +100,7 @@ public class VehicleDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiVehicleResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Something is wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
@@ -112,7 +112,7 @@ public class VehicleDetailsFragment extends Fragment {
         vehicleClass.setText(String.format(getString(R.string.class_format), vehicle.getVehicleClass()));
         vehicleModel.setText(String.format(getString(R.string.model_format), vehicle.getModel()));
         vehicleCrew.setText(String.format(getString(R.string.crew_format), vehicle.getCrew()));
-        vehiclePassengers.setText(String.format("Passenger number: %s", vehicle.getPassengers()));
+        vehiclePassengers.setText(String.format(getString(R.string.passenger_format), vehicle.getPassengers()));
     }
 
 }

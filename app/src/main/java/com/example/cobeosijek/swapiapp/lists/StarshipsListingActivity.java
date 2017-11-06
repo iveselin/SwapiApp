@@ -75,7 +75,7 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
 
             @Override
             public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,12 +117,12 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
 
                 @Override
                 public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 }
             });
 
         } else {
-            Toast.makeText(getApplicationContext(), "No more data to load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.no_more_data_text, Toast.LENGTH_SHORT).show();
         }
     }
 

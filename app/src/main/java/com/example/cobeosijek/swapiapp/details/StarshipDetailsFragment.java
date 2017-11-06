@@ -38,6 +38,12 @@ public class StarshipDetailsFragment extends Fragment {
     @BindView(R.id.starship_model)
     TextView starshipModel;
 
+    @BindView(R.id.starship_crew)
+    TextView starshipCrew;
+
+    @BindView(R.id.starship_passengers)
+    TextView starshipPassengers;
+
     private String starshipId;
 
     public static StarshipDetailsFragment newInstance(String starshipId) {
@@ -94,7 +100,7 @@ public class StarshipDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
@@ -105,5 +111,7 @@ public class StarshipDetailsFragment extends Fragment {
         starshipName.setText(starship.getName());
         starshipClass.setText(String.format(getString(R.string.class_format), starship.getStarshipClass()));
         starshipModel.setText(String.format(getString(R.string.model_format), starship.getModel()));
+        starshipCrew.setText(String.format(getString(R.string.crew_format), starship.getCrew()));
+        starshipPassengers.setText(String.format(getString(R.string.passenger_format), starship.getPassengers()));
     }
 }

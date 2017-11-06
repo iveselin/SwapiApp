@@ -17,11 +17,25 @@
     <string name="language_format">Language: %s</string>
     <string name="model_format">Model: %s</string>
     <string name="details_episode_number_format">Episode number %d.</string>
-    <string name="details_producers_format">This episode was produced by: %s</string>
+    <string name="details_producers_format">Produced by: %s</string>
     <string name="class_format">Class: %s</string>
     <string name="crew_format">Crew number: %s</string>
     <string name="orbital_period_format">Orbital period: %s days</string>
     <string name="rotation_period_format">Rotation period: %s hours</string>
     <string name="terrain_format">Terrain type: %s</string>
     <string name="classification_format">Classification: %s</string>
+    <string name="gender_format">Gender: %s</string>
+    <string name="person_mass_format">Mass: %s kg</string>
+    <string name="person_height_format">Height: %s cm</string>
+    <string name="movie_details_title">Movie details</string>
+    <string name="person_details_title">Person details</string>
+    <string name="planet_details_title">Planet details</string>
+    <string name="specie_details_title">Specie details</string>
+    <string name="starship_details_title">Starship details</string>
+    <string name="vehicle_details_title">Vehicle details</string>
+    <string name="director_format">Directed by: %s</string>
+    <string name="lifespan_format">Average lifespan: %s years</string>
+    <string name="passenger_format">Passenger number: %s</string>
+    <string name="api_fail_text">Something is wrong</string>
+    <string name="no_more_data_text">No more data to load</string>
 </resources>

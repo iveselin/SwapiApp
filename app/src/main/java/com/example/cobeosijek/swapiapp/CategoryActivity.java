@@ -43,13 +43,12 @@ public class CategoryActivity extends BaseActivity implements OnItemClickListene
         ButterKnife.bind(this);
 
         CategoryAdapter categoryAdapter = new CategoryAdapter();
-        categoryAdapter.setCategoryList(new Categories().getAvailableCategories());
+        categoryAdapter.setCategoryList(Categories.getAvailableCategories());
         categoryAdapter.setOnItemClickListener(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
         categoryList.setLayoutManager(layoutManager);
-
         categoryList.setAdapter(categoryAdapter);
     }
 

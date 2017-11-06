@@ -69,7 +69,7 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
             @Override
             public void onFailure(Call<SwapiMoviesResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }

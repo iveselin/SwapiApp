@@ -58,10 +58,12 @@ public class ItemDetailsActivity extends BaseActivity {
         if (getIntent().hasExtra(KEY_ID_SEND) && getIntent().hasExtra(KEY_TYPE_SEND)) {
             itemId = getIntent().getStringExtra(KEY_ID_SEND);
             itemType = getIntent().getStringExtra(KEY_TYPE_SEND);
+
             if (itemId == null || itemId.isEmpty() || itemType == null || itemType.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 finish();
             }
+
         } else {
             finish();
         }
@@ -71,31 +73,40 @@ public class ItemDetailsActivity extends BaseActivity {
     public void setUI() {
         ButterKnife.bind(this);
 
-        layoutTitle.setText(itemType);
+        String title;
 
         Fragment fragment = null;
 
         if (itemType.equals(CategoryTypeEnum.FILMS.name())) {
             fragment = MovieDetailsFragment.newInstance(itemId);
+            title = getString(R.string.movie_details_title);
 
         } else if (itemType.equals(CategoryTypeEnum.PEOPLE.name())) {
             fragment = PeopleDetailsFragment.newInstance(itemId);
+            title = getString(R.string.person_details_title);
 
         } else if (itemType.equals(CategoryTypeEnum.PLANETS.name())) {
             fragment = PlanetDetailsFragment.newInstance(itemId);
+            title = getString(R.string.planet_details_title);
 
         } else if (itemType.equals(CategoryTypeEnum.SPECIES.name())) {
             fragment = SpeciesDetailsFragment.newInstance(itemId);
+            title = getString(R.string.specie_details_title);
 
         } else if (itemType.equals(CategoryTypeEnum.STARSHIPS.name())) {
             fragment = StarshipDetailsFragment.newInstance(itemId);
+            title = getString(R.string.starship_details_title);
 
         } else if (itemType.equals(CategoryTypeEnum.VEHICLES.name())) {
             fragment = VehicleDetailsFragment.newInstance(itemId);
+            title = getString(R.string.vehicle_details_title);
+
         } else {
+            title = "";
             finish();
         }
 
+        layoutTitle.setText(title);
         setFragment(fragment);
     }
 

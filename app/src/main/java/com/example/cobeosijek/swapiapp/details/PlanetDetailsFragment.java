@@ -100,7 +100,7 @@ public class PlanetDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiPlanetResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });

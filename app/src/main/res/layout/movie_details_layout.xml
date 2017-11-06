@@ -33,6 +33,13 @@
         android:layout_margin="@dimen/default_margin_tiny" />
 
     <TextView
+        android:id="@+id/movie_director"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin_tiny" />
+
+    <TextView
         android:id="@+id/movie_crawl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -35,8 +35,14 @@ public class PeopleDetailsFragment extends Fragment {
     @BindView(R.id.person_birth_year)
     TextView personBirthYear;
 
-    @BindView(R.id.person_movie_list)
-    TextView personMovieList;
+    @BindView(R.id.person_gender)
+    TextView personGender;
+
+    @BindView(R.id.person_mass)
+    TextView personMass;
+
+    @BindView(R.id.person_height)
+    TextView personHeight;
 
     private String personId;
 
@@ -66,7 +72,7 @@ public class PeopleDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         getExtras();
-        setUI();
+        setUi();
     }
 
     private void getExtras() {
@@ -77,7 +83,7 @@ public class PeopleDetailsFragment extends Fragment {
         }
     }
 
-    private void setUI() {
+    private void setUi() {
         PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
         Call<SwapiPeopleResponse> call = service.getPerson(personId);
         call.enqueue(new Callback<SwapiPeopleResponse>() {
@@ -95,7 +101,7 @@ public class PeopleDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
@@ -104,6 +110,8 @@ public class PeopleDetailsFragment extends Fragment {
     private void showPerson(Person person) {
         personName.setText(person.getName());
         personBirthYear.setText(String.format(getString(R.string.birth_year_format), person.getBirthYear()));
-//        personMovieList.setText(person.getFilms());
+        personGender.setText(String.format(getString(R.string.gender_format), person.getGender()));
+        personMass.setText(String.format(getString(R.string.person_mass_format), person.getMass()));
+        personHeight.setText(String.format(getString(R.string.person_height_format), person.getHeight()));
     }
 }

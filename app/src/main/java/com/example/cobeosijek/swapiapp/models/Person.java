@@ -3,9 +3,6 @@ package com.example.cobeosijek.swapiapp.models;
 import com.example.cobeosijek.swapiapp.base.BaseModel;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by cobeosijek on 30/10/2017.
  */
@@ -17,7 +14,11 @@ public class Person extends BaseModel {
     @SerializedName("birth_year")
     private String birthYear;
 
-    private List<String> films = new ArrayList<>();
+    private String gender;
+
+    private String mass;
+
+    private String height;
 
     public String getName() {
         return getValueOrEmpty(name);
@@ -27,7 +28,15 @@ public class Person extends BaseModel {
         return getValueOrEmpty(birthYear);
     }
 
-    public List<String> getFilms() {
-        return films;
+    public String getGender() {
+        return getValueOrEmpty(gender);
+    }
+
+    public String getMass() {
+        return mass;
+    }
+
+    public String getHeight() {
+        return height;
     }
 }

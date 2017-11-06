@@ -38,6 +38,9 @@ public class SpeciesDetailsFragment extends Fragment {
     @BindView(R.id.specie_language)
     TextView language;
 
+    @BindView(R.id.specie_lifespan)
+    TextView averageLifespan;
+
     private String specieId;
 
     public static SpeciesDetailsFragment newInstance(String specieId) {
@@ -82,6 +85,7 @@ public class SpeciesDetailsFragment extends Fragment {
         SpeciesEndpoint service = BackendFactory.getSpeciesEndpoint();
         Call<SwapiSpeciesResponse> call = service.getSpecie(specieId);
         call.enqueue(new Callback<SwapiSpeciesResponse>() {
+
             @Override
             public void onResponse(Call<SwapiSpeciesResponse> call, Response<SwapiSpeciesResponse> response) {
                 if (response.body().getCount() <= 1) {
@@ -94,7 +98,7 @@ public class SpeciesDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SwapiSpeciesResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
@@ -105,6 +109,7 @@ public class SpeciesDetailsFragment extends Fragment {
         name.setText(species.getName());
         language.setText(String.format(getString(R.string.language_format), species.getLanguage()));
         classificaton.setText(String.format(getString(R.string.classification_format), species.getClassification()));
+        averageLifespan.setText(String.format(getString(R.string.lifespan_format), species.getAverageLifespan()));
     }
 
 }
