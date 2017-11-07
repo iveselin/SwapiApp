@@ -45,7 +45,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
         if (position % 2 != 0) {
             holder.setGray();
+        }else {
+            holder.setWhite();
         }
+
+
 
         Category category = categoryList.get(position);
 

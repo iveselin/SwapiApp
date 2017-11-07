@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.models.Movie;
-import com.example.cobeosijek.swapiapp.response.SwapiMoviesResponse;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.MovieEndpoint;
 
@@ -89,10 +89,10 @@ public class MovieDetailsFragment extends Fragment {
         movieCrawlText.setMovementMethod(new ScrollingMovementMethod());
 
         MovieEndpoint service = BackendFactory.getMovieEndpoint();
-        Call<SwapiMoviesResponse> call = service.getMovieById(movieId);
-        call.enqueue(new Callback<SwapiMoviesResponse>() {
+        Call<SwapiResponse<Movie>> call = service.getMovieById(movieId);
+        call.enqueue(new Callback<SwapiResponse<Movie>>() {
             @Override
-            public void onResponse(Call<SwapiMoviesResponse> call, Response<SwapiMoviesResponse> response) {
+            public void onResponse(Call<SwapiResponse<Movie>> call, Response<SwapiResponse<Movie>> response) {
                 if (response.body().getCount() <= 1) {
                     Movie movie = response.body().getResults().get(0);
                     if (movie != null) {
@@ -102,11 +102,13 @@ public class MovieDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SwapiMoviesResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Movie>> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
+
+        SwapiResponse<Movie> res;
     }
 
     private void showMovie(Movie movie) {

@@ -16,7 +16,8 @@ import com.example.cobeosijek.swapiapp.base.BaseActivity;
 import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.MovieAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiMoviesResponse;
+import com.example.cobeosijek.swapiapp.models.Movie;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.MovieEndpoint;
 
@@ -60,21 +61,21 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
     private void getMovies() {
         MovieEndpoint service = BackendFactory.getMovieEndpoint();
-        Call<SwapiMoviesResponse> call = service.getMovies();
-        call.enqueue(new Callback<SwapiMoviesResponse>() {
+        Call<SwapiResponse<Movie>> call = service.getMovies();
+        call.enqueue(new Callback<SwapiResponse<Movie>>() {
             @Override
-            public void onResponse(Call<SwapiMoviesResponse> call, Response<SwapiMoviesResponse> response) {
+            public void onResponse(Call<SwapiResponse<Movie>> call, Response<SwapiResponse<Movie>> response) {
                 showMovies(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiMoviesResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Movie>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showMovies(Response<SwapiMoviesResponse> results) {
+    private void showMovies(Response<SwapiResponse<Movie>> results) {
 
         MovieAdapter adapter = new MovieAdapter();
         adapter.setMovieList(results.body().getResults());
@@ -96,6 +97,6 @@ public class MovieListingActivity extends BaseActivity implements OnItemClickLis
 
     @Override
     public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.FILMS.name()));
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.FILMS));
     }
 }

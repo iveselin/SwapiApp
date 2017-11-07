@@ -18,7 +18,8 @@ import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.VehiclesAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiVehicleResponse;
+import com.example.cobeosijek.swapiapp.models.Vehicle;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.VehiclesEndpoint;
 
@@ -65,22 +66,22 @@ public class VehiclesListingActivity extends BaseActivity implements OnLastItemR
 
     private void getVehicles() {
         VehiclesEndpoint service = BackendFactory.getVehiclesEndpoint();
-        Call<SwapiVehicleResponse> call = service.getVehicles();
-        call.enqueue(new Callback<SwapiVehicleResponse>() {
+        Call<SwapiResponse<Vehicle>> call = service.getVehicles();
+        call.enqueue(new Callback<SwapiResponse<Vehicle>>() {
             @Override
-            public void onResponse(Call<SwapiVehicleResponse> call, Response<SwapiVehicleResponse> response) {
+            public void onResponse(Call<SwapiResponse<Vehicle>> call, Response<SwapiResponse<Vehicle>> response) {
                 nextLink = response.body().getNext();
                 showSpecies(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiVehicleResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Vehicle>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showSpecies(Response<SwapiVehicleResponse> response) {
+    private void showSpecies(Response<SwapiResponse<Vehicle>> response) {
         adapter = new VehiclesAdapter();
         adapter.setVehicleList(response.body().getResults());
         adapter.setOnItemListener(this);
@@ -95,11 +96,6 @@ public class VehiclesListingActivity extends BaseActivity implements OnLastItemR
     }
 
     @Override
-    public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.VEHICLES.name()));
-    }
-
-    @Override
     public void onLastItem() {
         if (nextLink != null) {
 
@@ -107,16 +103,16 @@ public class VehiclesListingActivity extends BaseActivity implements OnLastItemR
             String nextPageNumber = uri.getQueryParameter("page");
 
             VehiclesEndpoint service = BackendFactory.getVehiclesEndpoint();
-            Call<SwapiVehicleResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiVehicleResponse>() {
+            Call<SwapiResponse<Vehicle>> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiResponse<Vehicle>>() {
                 @Override
-                public void onResponse(Call<SwapiVehicleResponse> call, Response<SwapiVehicleResponse> response) {
+                public void onResponse(Call<SwapiResponse<Vehicle>> call, Response<SwapiResponse<Vehicle>> response) {
                     nextLink = response.body().getNext();
                     addSpecies(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiVehicleResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiResponse<Vehicle>> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -126,12 +122,17 @@ public class VehiclesListingActivity extends BaseActivity implements OnLastItemR
         }
     }
 
-    private void addSpecies(Response<SwapiVehicleResponse> response) {
+    private void addSpecies(Response<SwapiResponse<Vehicle>> response) {
         adapter.addVehiclesList(response.body().getResults());
     }
 
     @OnClick(R.id.action_bar_back_icon)
     void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void onItemClick(String itemId) {
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.VEHICLES));
     }
 }

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.models.Planet;
-import com.example.cobeosijek.swapiapp.response.SwapiPlanetResponse;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.PlanetEndpoint;
 
@@ -86,10 +86,10 @@ public class PlanetDetailsFragment extends Fragment {
     private void setUi() {
 
         PlanetEndpoint service = BackendFactory.getPlanetEndpoint();
-        Call<SwapiPlanetResponse> call = service.getPlanet(planetId);
-        call.enqueue(new Callback<SwapiPlanetResponse>() {
+        Call<SwapiResponse<Planet>> call = service.getPlanet(planetId);
+        call.enqueue(new Callback<SwapiResponse<Planet>>() {
             @Override
-            public void onResponse(Call<SwapiPlanetResponse> call, Response<SwapiPlanetResponse> response) {
+            public void onResponse(Call<SwapiResponse<Planet>> call, Response<SwapiResponse<Planet>> response) {
                 if (response.body().getCount() <= 1) {
                     Planet planet = response.body().getResults().get(0);
                     if (planet != null) {
@@ -99,7 +99,7 @@ public class PlanetDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SwapiPlanetResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Planet>> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }

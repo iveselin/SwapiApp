@@ -45,4 +45,8 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
     public void setGray() {
         itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorLightGrey));
     }
+
+    public void setWhite() {
+        itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorWhite));
+    }
 }

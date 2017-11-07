@@ -1,7 +1,8 @@
 package com.example.cobeosijek.swapiapp.retrofit;
 
 
-import com.example.cobeosijek.swapiapp.response.SwapiVehicleResponse;
+import com.example.cobeosijek.swapiapp.models.Vehicle;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,11 +15,11 @@ import retrofit2.http.Query;
 public interface VehiclesEndpoint {
 
     @GET("vehicles/")
-    Call<SwapiVehicleResponse> getVehicles();
+    Call<SwapiResponse<Vehicle>> getVehicles();
 
     @GET("vehicles/")
-    Call<SwapiVehicleResponse> getVehicle(@Query("search") String name);
+    Call<SwapiResponse<Vehicle>> getVehicle(@Query("search") String name);
 
     @GET("vehicles/")
-    Call<SwapiVehicleResponse> getNextPage(@Query("page") String nextPage);
+    Call<SwapiResponse<Vehicle>> getNextPage(@Query("page") String nextPage);
 }

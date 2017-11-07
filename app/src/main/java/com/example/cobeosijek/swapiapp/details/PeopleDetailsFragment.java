@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.models.Person;
-import com.example.cobeosijek.swapiapp.response.SwapiPeopleResponse;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.PeopleEndpoint;
 
@@ -85,11 +85,12 @@ public class PeopleDetailsFragment extends Fragment {
 
     private void setUi() {
         PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
-        Call<SwapiPeopleResponse> call = service.getPerson(personId);
-        call.enqueue(new Callback<SwapiPeopleResponse>() {
+        Call<SwapiResponse<Person>> call = service.getPerson(personId);
+        call.enqueue(new Callback<SwapiResponse<Person>>() {
 
             @Override
-            public void onResponse(Call<SwapiPeopleResponse> call, Response<SwapiPeopleResponse> response) {
+            public void onResponse(Call<SwapiResponse<Person>> call, Response<SwapiResponse<Person>> response) {
+                // TODO: 07/11/2017 check if everything is null
                 if (response.body().getCount() <= 1) {
                     Person person = response.body().getResults().get(0);
                     if (person != null) {
@@ -100,7 +101,7 @@ public class PeopleDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Person>> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }

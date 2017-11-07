@@ -1,7 +1,5 @@
 package com.example.cobeosijek.swapiapp.retrofit;
 
-import com.example.cobeosijek.swapiapp.models.Vehicle;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -23,7 +21,7 @@ public class BackendFactory {
     private static StarshipsEndpoint starshipsEndpoint;
     private static VehiclesEndpoint vehiclesEndpoint;
 
-    public static Retrofit getRetrofitInstance() {
+    private static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

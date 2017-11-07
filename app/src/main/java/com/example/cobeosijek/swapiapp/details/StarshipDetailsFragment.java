@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.models.Starship;
-import com.example.cobeosijek.swapiapp.response.SwapiStarshipsResponse;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.StarshipsEndpoint;
 
@@ -86,10 +86,10 @@ public class StarshipDetailsFragment extends Fragment {
     private void setUi() {
 
         StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
-        Call<SwapiStarshipsResponse> call = service.getStarship(starshipId);
-        call.enqueue(new Callback<SwapiStarshipsResponse>() {
+        Call<SwapiResponse<Starship>> call = service.getStarship(starshipId);
+        call.enqueue(new Callback<SwapiResponse<Starship>>() {
             @Override
-            public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
+            public void onResponse(Call<SwapiResponse<Starship>> call, Response<SwapiResponse<Starship>> response) {
                 if (response.body().getCount() <= 1) {
                     Starship starship = response.body().getResults().get(0);
                     if (starship != null) {
@@ -99,7 +99,7 @@ public class StarshipDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Starship>> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }

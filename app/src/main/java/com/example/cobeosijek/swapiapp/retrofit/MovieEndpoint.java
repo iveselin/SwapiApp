@@ -1,6 +1,7 @@
 package com.example.cobeosijek.swapiapp.retrofit;
 
-import com.example.cobeosijek.swapiapp.response.SwapiMoviesResponse;
+import com.example.cobeosijek.swapiapp.models.Movie;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,8 +14,8 @@ import retrofit2.http.Query;
 public interface MovieEndpoint {
 
     @GET("films/")
-    Call<SwapiMoviesResponse> getMovies();
+    Call<SwapiResponse<Movie>> getMovies();
 
     @GET("films/")
-    Call<SwapiMoviesResponse> getMovieById(@Query("search") String title);
+    Call<SwapiResponse<Movie>> getMovieById(@Query("search") String title);
 }

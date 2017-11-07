@@ -36,9 +36,9 @@ public class ItemDetailsActivity extends BaseActivity {
     TextView layoutTitle;
 
     private String itemId;
-    private String itemType;
+    private CategoryTypeEnum itemType;
 
-    public static Intent getLaunchIntent(Context fromContext, String itemId, String itemType) {
+    public static Intent getLaunchIntent(Context fromContext, String itemId, CategoryTypeEnum itemType) {
         Intent launchIntent = new Intent(fromContext, ItemDetailsActivity.class);
         launchIntent.putExtra(KEY_ID_SEND, itemId);
         launchIntent.putExtra(KEY_TYPE_SEND, itemType);
@@ -57,10 +57,10 @@ public class ItemDetailsActivity extends BaseActivity {
     private void getExtras() {
         if (getIntent().hasExtra(KEY_ID_SEND) && getIntent().hasExtra(KEY_TYPE_SEND)) {
             itemId = getIntent().getStringExtra(KEY_ID_SEND);
-            itemType = getIntent().getStringExtra(KEY_TYPE_SEND);
+            itemType = (CategoryTypeEnum) getIntent().getSerializableExtra(KEY_TYPE_SEND);
 
-            if (itemId == null || itemId.isEmpty() || itemType == null || itemType.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            if (itemId == null || itemId.isEmpty() || itemType == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.default_error_message), Toast.LENGTH_SHORT).show();
                 finish();
             }
 
@@ -73,37 +73,45 @@ public class ItemDetailsActivity extends BaseActivity {
     public void setUI() {
         ButterKnife.bind(this);
 
-        String title;
+        String title = "";
 
         Fragment fragment = null;
 
-        if (itemType.equals(CategoryTypeEnum.FILMS.name())) {
-            fragment = MovieDetailsFragment.newInstance(itemId);
-            title = getString(R.string.movie_details_title);
+        switch (itemType) {
+            case FILMS:
+                fragment = MovieDetailsFragment.newInstance(itemId);
+                title = getString(R.string.movie_details_title);
+                break;
 
-        } else if (itemType.equals(CategoryTypeEnum.PEOPLE.name())) {
-            fragment = PeopleDetailsFragment.newInstance(itemId);
-            title = getString(R.string.person_details_title);
+            case PEOPLE:
+                fragment = PeopleDetailsFragment.newInstance(itemId);
+                title = getString(R.string.person_details_title);
+                break;
 
-        } else if (itemType.equals(CategoryTypeEnum.PLANETS.name())) {
-            fragment = PlanetDetailsFragment.newInstance(itemId);
-            title = getString(R.string.planet_details_title);
+            case PLANETS:
+                fragment = PlanetDetailsFragment.newInstance(itemId);
+                title = getString(R.string.planet_details_title);
+                break;
 
-        } else if (itemType.equals(CategoryTypeEnum.SPECIES.name())) {
-            fragment = SpeciesDetailsFragment.newInstance(itemId);
-            title = getString(R.string.specie_details_title);
+            case SPECIES:
+                fragment = SpeciesDetailsFragment.newInstance(itemId);
+                title = getString(R.string.specie_details_title);
+                break;
 
-        } else if (itemType.equals(CategoryTypeEnum.STARSHIPS.name())) {
-            fragment = StarshipDetailsFragment.newInstance(itemId);
-            title = getString(R.string.starship_details_title);
+            case STARSHIPS:
+                fragment = StarshipDetailsFragment.newInstance(itemId);
+                title = getString(R.string.starship_details_title);
+                break;
 
-        } else if (itemType.equals(CategoryTypeEnum.VEHICLES.name())) {
-            fragment = VehicleDetailsFragment.newInstance(itemId);
-            title = getString(R.string.vehicle_details_title);
+            case VEHICLES:
+                fragment = VehicleDetailsFragment.newInstance(itemId);
+                title = getString(R.string.vehicle_details_title);
+                break;
 
-        } else {
-            title = "";
-            finish();
+            default:
+                Toast.makeText(getApplicationContext(), getString(R.string.default_error_message), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
         }
 
         layoutTitle.setText(title);
@@ -114,7 +122,7 @@ public class ItemDetailsActivity extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
 

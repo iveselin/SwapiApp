@@ -18,7 +18,8 @@ import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.PlanetAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiPlanetResponse;
+import com.example.cobeosijek.swapiapp.models.Planet;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.PlanetEndpoint;
 
@@ -65,22 +66,22 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
 
     private void getPlanets() {
         PlanetEndpoint service = BackendFactory.getPlanetEndpoint();
-        Call<SwapiPlanetResponse> call = service.getPlanets();
-        call.enqueue(new Callback<SwapiPlanetResponse>() {
+        Call<SwapiResponse<Planet>> call = service.getPlanets();
+        call.enqueue(new Callback<SwapiResponse<Planet>>() {
             @Override
-            public void onResponse(Call<SwapiPlanetResponse> call, Response<SwapiPlanetResponse> response) {
+            public void onResponse(Call<SwapiResponse<Planet>> call, Response<SwapiResponse<Planet>> response) {
                 nextLink = response.body().getNext();
                 showPlanets(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiPlanetResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Planet>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showPlanets(Response<SwapiPlanetResponse> response) {
+    private void showPlanets(Response<SwapiResponse<Planet>> response) {
         adapter = new PlanetAdapter();
         adapter.setPlanetList(response.body().getResults());
         adapter.setOnItemListener(this);
@@ -95,11 +96,6 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
     }
 
     @Override
-    public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.PLANETS.name()));
-    }
-
-    @Override
     public void onLastItem() {
         if (nextLink != null) {
 
@@ -107,16 +103,16 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
             String nextPageNumber = uri.getQueryParameter("page");
 
             PlanetEndpoint service = BackendFactory.getPlanetEndpoint();
-            Call<SwapiPlanetResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiPlanetResponse>() {
+            Call<SwapiResponse<Planet>> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiResponse<Planet>>() {
                 @Override
-                public void onResponse(Call<SwapiPlanetResponse> call, Response<SwapiPlanetResponse> response) {
+                public void onResponse(Call<SwapiResponse<Planet>> call, Response<SwapiResponse<Planet>> response) {
                     nextLink = response.body().getNext();
                     addPlanets(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiPlanetResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiResponse<Planet>> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -126,12 +122,17 @@ public class PlanetListingActivity extends BaseActivity implements OnLastItemRea
         }
     }
 
-    private void addPlanets(Response<SwapiPlanetResponse> response) {
+    private void addPlanets(Response<SwapiResponse<Planet>> response) {
         adapter.addPlanetList(response.body().getResults());
     }
 
     @OnClick(R.id.action_bar_back_icon)
     void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void onItemClick(String itemId) {
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.PLANETS));
     }
 }

@@ -18,7 +18,8 @@ import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.PersonAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiPeopleResponse;
+import com.example.cobeosijek.swapiapp.models.Person;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.PeopleEndpoint;
 
@@ -66,22 +67,22 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
     private void getPeople() {
 
         PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
-        Call<SwapiPeopleResponse> call = service.getPeople();
-        call.enqueue(new Callback<SwapiPeopleResponse>() {
+        Call<SwapiResponse<Person>> call = service.getPeople();
+        call.enqueue(new Callback<SwapiResponse<Person>>() {
             @Override
-            public void onResponse(Call<SwapiPeopleResponse> call, Response<SwapiPeopleResponse> response) {
+            public void onResponse(Call<SwapiResponse<Person>> call, Response<SwapiResponse<Person>> response) {
                 nextLink = response.body().getNext();
                 showPeople(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Person>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showPeople(Response<SwapiPeopleResponse> results) {
+    private void showPeople(Response<SwapiResponse<Person>> results) {
         adapter = new PersonAdapter();
         adapter.setPersonList(results.body().getResults());
         adapter.setOnItemListener(this);
@@ -102,12 +103,6 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
 
 
     @Override
-    public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.PEOPLE.name()));
-    }
-
-
-    @Override
     public void onLastItem() {
         if (nextLink != null) {
 
@@ -115,16 +110,16 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
             String nextPageNumber = uri.getQueryParameter("page");
 
             PeopleEndpoint service = BackendFactory.getPeopleEndpoint();
-            Call<SwapiPeopleResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiPeopleResponse>() {
+            Call<SwapiResponse<Person>> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiResponse<Person>>() {
                 @Override
-                public void onResponse(Call<SwapiPeopleResponse> call, Response<SwapiPeopleResponse> response) {
+                public void onResponse(Call<SwapiResponse<Person>> call, Response<SwapiResponse<Person>> response) {
                     nextLink = response.body().getNext();
                     addPeople(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiPeopleResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiResponse<Person>> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -134,7 +129,13 @@ public class PeopleListingActivity extends BaseActivity implements OnItemClickLi
         }
     }
 
-    private void addPeople(Response<SwapiPeopleResponse> response) {
+
+    private void addPeople(Response<SwapiResponse<Person>> response) {
         adapter.addPersonList(response.body().getResults());
+    }
+
+    @Override
+    public void onItemClick(String itemId) {
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.PEOPLE));
     }
 }

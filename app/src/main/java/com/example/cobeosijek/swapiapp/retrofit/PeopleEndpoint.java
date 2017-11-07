@@ -1,6 +1,7 @@
 package com.example.cobeosijek.swapiapp.retrofit;
 
-import com.example.cobeosijek.swapiapp.response.SwapiPeopleResponse;
+import com.example.cobeosijek.swapiapp.models.Person;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,11 +14,11 @@ import retrofit2.http.Query;
 public interface PeopleEndpoint {
 
     @GET("people/")
-    Call<SwapiPeopleResponse> getPeople();
+    Call<SwapiResponse<Person>> getPeople();
 
     @GET("people/")
-    Call<SwapiPeopleResponse> getPerson(@Query("search") String name);
+    Call<SwapiResponse<Person>> getPerson(@Query("search") String name);
 
     @GET("people/")
-    Call<SwapiPeopleResponse> getNextPage(@Query("page") String nextPage);
+    Call<SwapiResponse<Person>> getNextPage(@Query("page") String nextPage);
 }

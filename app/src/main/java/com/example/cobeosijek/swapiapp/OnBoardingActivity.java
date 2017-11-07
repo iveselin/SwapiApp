@@ -1,18 +1,13 @@
 package com.example.cobeosijek.swapiapp;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.example.cobeosijek.swapiapp.base.BaseActivity;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OnBoardingActivity extends BaseActivity {
-
-    @BindView(R.id.forward_icon)
-    ImageView forwardImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

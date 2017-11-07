@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.models.Species;
-import com.example.cobeosijek.swapiapp.response.SwapiSpeciesResponse;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.SpeciesEndpoint;
 
@@ -83,11 +83,11 @@ public class SpeciesDetailsFragment extends Fragment {
     private void setUi() {
 
         SpeciesEndpoint service = BackendFactory.getSpeciesEndpoint();
-        Call<SwapiSpeciesResponse> call = service.getSpecie(specieId);
-        call.enqueue(new Callback<SwapiSpeciesResponse>() {
+        Call<SwapiResponse<Species>> call = service.getSpecie(specieId);
+        call.enqueue(new Callback<SwapiResponse<Species>>() {
 
             @Override
-            public void onResponse(Call<SwapiSpeciesResponse> call, Response<SwapiSpeciesResponse> response) {
+            public void onResponse(Call<SwapiResponse<Species>> call, Response<SwapiResponse<Species>> response) {
                 if (response.body().getCount() <= 1) {
                     Species species = response.body().getResults().get(0);
                     if (species != null) {
@@ -97,7 +97,7 @@ public class SpeciesDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SwapiSpeciesResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Species>> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }

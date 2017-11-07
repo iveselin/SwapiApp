@@ -58,6 +58,12 @@ public class PersonAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         holder.setItemId(person.getName());
 
         handleItemPosition(position);
+
+        if (position % 2 == 1) {
+            holder.setGray();
+        }else {
+            holder.setWhite();
+        }
     }
 
     private void handleItemPosition(int position) {

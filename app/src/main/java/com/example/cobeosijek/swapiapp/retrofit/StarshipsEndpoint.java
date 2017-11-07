@@ -1,6 +1,7 @@
 package com.example.cobeosijek.swapiapp.retrofit;
 
-import com.example.cobeosijek.swapiapp.response.SwapiStarshipsResponse;
+import com.example.cobeosijek.swapiapp.models.Starship;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,11 +13,11 @@ import retrofit2.http.Query;
 
 public interface StarshipsEndpoint {
     @GET("starships/")
-    Call<SwapiStarshipsResponse> getStarships();
+    Call<SwapiResponse<Starship>> getStarships();
 
     @GET("starships/")
-    Call<SwapiStarshipsResponse> getStarship(@Query("search") String name);
+    Call<SwapiResponse<Starship>> getStarship(@Query("search") String name);
 
     @GET("starships/")
-    Call<SwapiStarshipsResponse> getNextPage(@Query("page") String nextPage);
+    Call<SwapiResponse<Starship>> getNextPage(@Query("page") String nextPage);
 }

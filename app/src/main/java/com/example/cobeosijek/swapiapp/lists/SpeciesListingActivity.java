@@ -18,7 +18,8 @@ import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.SpeciesAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiSpeciesResponse;
+import com.example.cobeosijek.swapiapp.models.Species;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.SpeciesEndpoint;
 
@@ -65,22 +66,22 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
 
     private void getSpecies() {
         SpeciesEndpoint service = BackendFactory.getSpeciesEndpoint();
-        Call<SwapiSpeciesResponse> call = service.getSpecies();
-        call.enqueue(new Callback<SwapiSpeciesResponse>() {
+        Call<SwapiResponse<Species>> call = service.getSpecies();
+        call.enqueue(new Callback<SwapiResponse<Species>>() {
             @Override
-            public void onResponse(Call<SwapiSpeciesResponse> call, Response<SwapiSpeciesResponse> response) {
+            public void onResponse(Call<SwapiResponse<Species>> call, Response<SwapiResponse<Species>> response) {
                 nextLink = response.body().getNext();
                 showSpecies(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiSpeciesResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Species>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showSpecies(Response<SwapiSpeciesResponse> response) {
+    private void showSpecies(Response<SwapiResponse<Species>> response) {
         adapter = new SpeciesAdapter();
         adapter.setSpeciesList(response.body().getResults());
         adapter.setOnItemListener(this);
@@ -95,11 +96,6 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
     }
 
     @Override
-    public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.SPECIES.name()));
-    }
-
-    @Override
     public void onLastItem() {
         if (nextLink != null) {
 
@@ -107,16 +103,16 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
             String nextPageNumber = uri.getQueryParameter("page");
 
             SpeciesEndpoint service = BackendFactory.getSpeciesEndpoint();
-            Call<SwapiSpeciesResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiSpeciesResponse>() {
+            Call<SwapiResponse<Species>> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiResponse<Species>>() {
                 @Override
-                public void onResponse(Call<SwapiSpeciesResponse> call, Response<SwapiSpeciesResponse> response) {
+                public void onResponse(Call<SwapiResponse<Species>> call, Response<SwapiResponse<Species>> response) {
                     nextLink = response.body().getNext();
                     addSpecies(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiSpeciesResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiResponse<Species>> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -126,12 +122,17 @@ public class SpeciesListingActivity extends BaseActivity implements OnLastItemRe
         }
     }
 
-    private void addSpecies(Response<SwapiSpeciesResponse> response) {
+    private void addSpecies(Response<SwapiResponse<Species>> response) {
         adapter.addSpeciesList(response.body().getResults());
     }
 
     @OnClick(R.id.action_bar_back_icon)
     void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void onItemClick(String itemId) {
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.SPECIES));
     }
 }

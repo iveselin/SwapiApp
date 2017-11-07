@@ -37,7 +37,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-
     @OnClick(R.id.root_view)
     void onItemClicked() {
         if (listener != null) {
@@ -45,7 +44,15 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    public void setGray() {
+        itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorLightGrey));
+    }
+
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public void setWhite() {
+        itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorWhite));
     }
 }

@@ -18,7 +18,8 @@ import com.example.cobeosijek.swapiapp.base.OnItemClickListener;
 import com.example.cobeosijek.swapiapp.base.OnLastItemReachedListener;
 import com.example.cobeosijek.swapiapp.category_list.CategoryTypeEnum;
 import com.example.cobeosijek.swapiapp.item_list.StarshipsAdapter;
-import com.example.cobeosijek.swapiapp.response.SwapiStarshipsResponse;
+import com.example.cobeosijek.swapiapp.models.Starship;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.StarshipsEndpoint;
 
@@ -65,22 +66,22 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
 
     private void getStarships() {
         StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
-        Call<SwapiStarshipsResponse> call = service.getStarships();
-        call.enqueue(new Callback<SwapiStarshipsResponse>() {
+        Call<SwapiResponse<Starship>> call = service.getStarships();
+        call.enqueue(new Callback<SwapiResponse<Starship>>() {
             @Override
-            public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
+            public void onResponse(Call<SwapiResponse<Starship>> call, Response<SwapiResponse<Starship>> response) {
                 nextLink = response.body().getNext();
                 showSpecies(response);
             }
 
             @Override
-            public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Starship>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showSpecies(Response<SwapiStarshipsResponse> response) {
+    private void showSpecies(Response<SwapiResponse<Starship>> response) {
         adapter = new StarshipsAdapter();
         adapter.setStarshipList(response.body().getResults());
         adapter.setOnItemListener(this);
@@ -95,11 +96,6 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
     }
 
     @Override
-    public void onItemClick(String itemId) {
-        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.STARSHIPS.name()));
-    }
-
-    @Override
     public void onLastItem() {
         if (nextLink != null) {
 
@@ -107,16 +103,16 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
             String nextPageNumber = uri.getQueryParameter("page");
 
             StarshipsEndpoint service = BackendFactory.getStarshipsEndpoint();
-            Call<SwapiStarshipsResponse> call = service.getNextPage(nextPageNumber);
-            call.enqueue(new Callback<SwapiStarshipsResponse>() {
+            Call<SwapiResponse<Starship>> call = service.getNextPage(nextPageNumber);
+            call.enqueue(new Callback<SwapiResponse<Starship>>() {
                 @Override
-                public void onResponse(Call<SwapiStarshipsResponse> call, Response<SwapiStarshipsResponse> response) {
+                public void onResponse(Call<SwapiResponse<Starship>> call, Response<SwapiResponse<Starship>> response) {
                     nextLink = response.body().getNext();
                     addSpecies(response);
                 }
 
                 @Override
-                public void onFailure(Call<SwapiStarshipsResponse> call, Throwable t) {
+                public void onFailure(Call<SwapiResponse<Starship>> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -126,12 +122,17 @@ public class StarshipsListingActivity extends BaseActivity implements OnLastItem
         }
     }
 
-    private void addSpecies(Response<SwapiStarshipsResponse> response) {
+    private void addSpecies(Response<SwapiResponse<Starship>> response) {
         adapter.addStarshipsList(response.body().getResults());
     }
 
     @OnClick(R.id.action_bar_back_icon)
     void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void onItemClick(String itemId) {
+        startActivity(ItemDetailsActivity.getLaunchIntent(this, itemId, CategoryTypeEnum.STARSHIPS));
     }
 }

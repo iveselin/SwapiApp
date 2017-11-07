@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.cobeosijek.swapiapp.R;
 import com.example.cobeosijek.swapiapp.models.Vehicle;
-import com.example.cobeosijek.swapiapp.response.SwapiVehicleResponse;
+import com.example.cobeosijek.swapiapp.response.SwapiResponse;
 import com.example.cobeosijek.swapiapp.retrofit.BackendFactory;
 import com.example.cobeosijek.swapiapp.retrofit.VehiclesEndpoint;
 
@@ -86,10 +86,10 @@ public class VehicleDetailsFragment extends Fragment {
     private void setUi() {
 
         VehiclesEndpoint service = BackendFactory.getVehiclesEndpoint();
-        Call<SwapiVehicleResponse> call = service.getVehicle(vehicleId);
-        call.enqueue(new Callback<SwapiVehicleResponse>() {
+        Call<SwapiResponse<Vehicle>> call = service.getVehicle(vehicleId);
+        call.enqueue(new Callback<SwapiResponse<Vehicle>>() {
             @Override
-            public void onResponse(Call<SwapiVehicleResponse> call, Response<SwapiVehicleResponse> response) {
+            public void onResponse(Call<SwapiResponse<Vehicle>> call, Response<SwapiResponse<Vehicle>> response) {
                 if (response.body().getCount() <= 1) {
                     Vehicle vehicle = response.body().getResults().get(0);
                     if (vehicle != null) {
@@ -99,7 +99,7 @@ public class VehicleDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SwapiVehicleResponse> call, Throwable t) {
+            public void onFailure(Call<SwapiResponse<Vehicle>> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.api_fail_text, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
